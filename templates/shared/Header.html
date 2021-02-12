@@ -1,0 +1,74 @@
+{% load static %}
+
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-film mr-2"></i>
+            Galleria
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                {% url 'home-page' as home_page %}
+                {% url 'login' as login %}
+                {% url 'register' as register %}
+                {% url 'about' as about %}
+                {% url 'video' as video %}
+                {% url 'photo' as photo %}
+                {% url 'contact' as contact %}
+                <li class="nav-item">
+                    <a class="nav-link nav-link-1 {% if request.path == home_page %}active{% endif %}"
+                        href="{% url 'home-page' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ photo }}" class="nav-link nav-link-2 {% if request.path == photo %} active {%endif%}"
+                        >Photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-3 {% if request.path == video %}active{% endif %}"
+                       href="{% url 'video' %}">Videos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4 {% if request.path == about %}active{% endif %}"
+                       href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-5 {% if request.path == contact %}active{% endif %}"
+                       href="{% url 'contact' %}">Contact</a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-6 {% if request.path == login %}active{% endif %}"
+                           href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-7 {% if request.path == register %}active{% endif %}"
+                           href="{% url 'register' %}">Register</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-8" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-8" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll"
+     data-image-src="{% static 'img/hero.jpg' %}">
+    <form class="d-flex tm-search-form" action="/search">
+        <input class="form-control tm-search-input" value="{{ request.GET.q }}" name="q" type="search"
+               placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success tm-search-btn" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>

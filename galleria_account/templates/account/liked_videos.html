@@ -1,0 +1,26 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+{% block title %}
+    <title>Liked Videos</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                {% render_partial 'galleria_account.views.sidebar' %}
+            </div>
+            <div class="col-md-8 ">
+                <div class="row tm-mb-90 tm-gallery">
+                    {% for image in page_obj %}
+                        {% include 'shared/media_component.html' with media=image %}
+                    {% empty %}
+                        <div>
+                            <p>There is no favorite photo</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+
+{% block title %}
+    <title>Edit Profile</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                {% render_partial 'galleria_account.views.sidebar' %}
+            </div>
+            <div class="col-md-8">
+                <form id="contact-form" action="" method="POST" class="tm-contact-form mx-auto">
+                    <h2 class="tm-text-primary mb-5">Edit Profile</h2>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ edite_form.first_name }}
+                    </div>
+                    <div class="form-group">
+                        {{ edite_form.last_name }}
+                    </div>
+                    <div class="form-group tm-text-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

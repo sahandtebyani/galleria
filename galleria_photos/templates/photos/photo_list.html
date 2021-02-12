@@ -1,0 +1,56 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Photos</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-6 tm-text-primary">
+                Latest Photos
+            </h2>
+            <div class="col-6 d-flex justify-content-end align-items-center">
+                <form action="" class="tm-text-primary">
+                    Page <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary"> of 200
+                </form>
+            </div>
+        </div>
+        <div class="row tm-mb-90 tm-gallery">
+            {% for image in page_obj %}
+                {% include 'shared/media_component.html' with media=image %}
+            {% endfor %}
+
+        </div> <!-- row -->
+        <div class="row tm-mb-90">
+            <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"
+                       class="btn btn-primary tm-btn-prev mb-2 ">previous</a>
+                {% else %}
+                    <a href=""
+                       class="btn btn-primary tm-btn-prev mb-2 disabled">previous</a>
+                {% endif %}
+                {#                <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>#}
+                <div class="tm-paging d-flex">
+                    {#                    <a href="javascript:void(0);" class="active tm-paging-link">1</a>#}
+                    {% for num in paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="active tm-paging-link"><a href="?page={{ num }}">{{ num }}</a></li>
+                            {# this part allows you to limit the range of numbers shown in paginator part #}
+                        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+                            <li class="tm-paging-link"><a href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary tm-btn-next">next</a>
+                    {% else %}
+                    <a href="" class="btn btn-primary tm-btn-next disabled">next</a>
+                {% endif %}
+                {#                <a href="javascript:void(0);" class="btn btn-primary tm-btn-next">Next Page</a>#}
+            </div>
+        </div>
+    </div> <!-- container-fluid, tm-container-content -->
+{% endblock %}
